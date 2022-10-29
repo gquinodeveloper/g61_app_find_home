@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:app_find_house/app/data/models/request/request_auth_model.dart';
 import 'package:app_find_house/app/data/repositories/customer_repository.dart';
+import 'package:app_find_house/app/routes/app_routes.dart';
 import 'package:app_find_house/app/routes/app_views.dart';
+import 'package:app_find_house/app/services/local_storage_service.dart';
+import 'package:app_find_house/core/utils/keys.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   @override
   void onInit() {
-    doAuth();
     super.onInit();
   }
 
@@ -26,16 +30,35 @@ class LoginController extends GetxController {
   final _customerRepository = Get.find<CustomerRepository>();
 
   //variables
+  String email = "gqcrispin@gmail.com";
+  String password = "123456";
 
   //Functions
   void doAuth() async {
     try {
       final response = await _customerRepository.postAuth(
         RequestAuthModel(
-          email: "gqcrispin@gmail.com",
-          password: "123456",
+          email: email,
+          password: password,
         ),
       );
+      if (response.requestToken.isNotEmpty) {
+        await LocalStorageService.set(
+          key: Keys.keyUserEmail,
+          value: email,
+        );
+        await LocalStorageService.set(
+          key: Keys.keyUserPass,
+          value: password,
+        );
+        await LocalStorageService.set(
+          key: Keys.keyAuthUser,
+          value: json.encode(
+            response.toJson(),
+          ),
+        );
+        Get.offNamed(AppRoutes.HOME);
+      }
     } catch (error) {
       print("Error -> $error");
     }

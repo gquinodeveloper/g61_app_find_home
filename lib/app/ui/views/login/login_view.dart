@@ -8,7 +8,15 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
-      builder: (controller) => Scaffold(),
+      builder: (controller) => Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: TextButton(
+            onPressed: controller.doAuth,
+            child: const Text("Iniciar sesión"),
+          ),
+        ),
+      ),
     );
   }
 }
