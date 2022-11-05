@@ -1,4 +1,8 @@
+import 'package:app_find_house/app/ui/components/templates/custom_scaffold.dart';
 import 'package:app_find_house/app/ui/views/login/login_controller.dart';
+import 'package:app_find_house/app/ui/views/login/widgets/content.dart';
+import 'package:app_find_house/app/ui/views/login/widgets/header.dart';
+import 'package:app_find_house/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,12 +12,20 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
-      builder: (controller) => Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: TextButton(
-            onPressed: controller.doAuth,
-            child: const Text("Iniciar sesión"),
+      builder: (controller) => CustomScaffold(
+        body: SafeArea(
+          bottom: false,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top,
+              child: Column(
+                children: const [
+                  Header(),
+                  Content(),
+                ],
+              ),
+            ),
           ),
         ),
       ),

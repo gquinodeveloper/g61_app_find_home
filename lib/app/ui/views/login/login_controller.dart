@@ -30,10 +30,14 @@ class LoginController extends GetxController {
   final _customerRepository = Get.find<CustomerRepository>();
 
   //variables
-  String email = "gqcrispin@gmail.com";
-  String password = "123456";
+  late String email = "";
+  late String password = "";
 
   //Functions
+  void goToSignUp() {
+    Get.toNamed(AppRoutes.SIGNUP);
+  }
+
   void doAuth() async {
     try {
       final response = await _customerRepository.postAuth(

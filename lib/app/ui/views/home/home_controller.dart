@@ -4,6 +4,7 @@ import 'package:app_find_house/app/data/models/request/request_information_model
 import 'package:app_find_house/app/data/models/response/response_auth_model.dart';
 import 'package:app_find_house/app/data/models/response/response_information_model.dart';
 import 'package:app_find_house/app/data/repositories/customer_repository.dart';
+import 'package:app_find_house/app/data/repositories/house_repository.dart';
 import 'package:app_find_house/app/routes/app_routes.dart';
 import 'package:app_find_house/app/services/local_storage_service.dart';
 import 'package:app_find_house/core/utils/keys.dart';
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
 
   //Instances
   final _customerRepository = Get.find<CustomerRepository>();
+  final _houseRepository = Get.find<HouseRepository>();
 
   ResponseAuthModel responseAuthModel = ResponseAuthModel();
   ResponseInformationModel informationUser = ResponseInformationModel();
@@ -55,6 +57,19 @@ class HomeController extends GetxController {
           "${informationUser.information?[0].name} ${informationUser.information?[0].lastname}";
 
       address.value = "${informationUser.information?[0].address}";
+      loadHouses();
+    }
+  }
+
+  void loadHouses() async {
+    try {
+      final response = await _houseRepository.getHouses(
+        responseAuthModel.requestToken,
+      );
+
+      print(response.result?.length);
+    } catch (error) {
+      printError(info: error.toString());
     }
   }
 
