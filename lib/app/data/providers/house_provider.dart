@@ -1,4 +1,6 @@
+import 'package:app_find_house/app/data/models/request/request_reservation_model.dart';
 import 'package:app_find_house/app/data/models/response/response_house_model.dart';
+import 'package:app_find_house/app/data/models/response/response_reservation_model.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
@@ -16,5 +18,21 @@ class HouseProvider {
     );
 
     return ResponseHouseModel.fromJson(response.data);
+  }
+
+  Future<ResponseReservationModel> postReservation({
+    required String token,
+    required RequestReservationModel requestReservation,
+  }) async {
+    final response = await _dio.post(
+      "/api/reservation/register",
+      options: Options(
+        headers: {
+          "auth": token,
+        },
+      ),
+      data: requestReservation.toJson(),
+    );
+    return ResponseReservationModel.fromJson(response.data);
   }
 }

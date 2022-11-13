@@ -6,11 +6,14 @@ import 'package:app_find_house/app/routes/app_routes.dart';
 import 'package:app_find_house/app/routes/app_views.dart';
 import 'package:app_find_house/app/services/local_storage_service.dart';
 import 'package:app_find_house/core/utils/keys.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   @override
   void onInit() {
+    crtlTextEmail = TextEditingController();
+    crtlTextPassword = TextEditingController();
     super.onInit();
   }
 
@@ -22,7 +25,8 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    crtlTextEmail.dispose();
+    crtlTextPassword.dispose();
     super.onClose();
   }
 
@@ -33,6 +37,10 @@ class LoginController extends GetxController {
   late String email = "";
   late String password = "";
 
+  //TextEditingController
+  late TextEditingController crtlTextEmail;
+  late TextEditingController crtlTextPassword;
+
   //Functions
   void goToSignUp() {
     Get.toNamed(AppRoutes.SIGNUP);
@@ -42,18 +50,17 @@ class LoginController extends GetxController {
     try {
       final response = await _customerRepository.postAuth(
         RequestAuthModel(
-          email: email,
-          password: password,
+          email: crtlTextEmail.text,
+          password: crtlTextPassword.text,
         ),
       );
       if (response.requestToken.isNotEmpty) {
         await LocalStorageService.set(
-          key: Keys.keyUserEmail,
-          value: email,
-        );
+            key: Keys.keyUserEmail, value: crtlTextEmail.text //email,
+            );
         await LocalStorageService.set(
           key: Keys.keyUserPass,
-          value: password,
+          value: crtlTextPassword.text, //password,
         );
         await LocalStorageService.set(
           key: Keys.keyAuthUser,

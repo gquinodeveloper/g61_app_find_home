@@ -37,6 +37,7 @@ class FormLogin extends GetView<LoginController> {
               ),
               SizedBox(height: 50.h),
               InputText(
+                controller: controller.crtlTextEmail,
                 iconPrefix: Icons.email_outlined,
                 iconColor: AppColors.light,
                 border: InputBorder.none,
@@ -47,10 +48,10 @@ class FormLogin extends GetView<LoginController> {
                 focusedBorderColor: AppColors.cyan,
                 fontSize: 14.0,
                 fontColor: Colors.black45,
-                onChanged: (value) => controller.email,
               ),
               SizedBox(height: 20.h),
               InputText(
+                controller: controller.crtlTextPassword,
                 iconPrefix: Icons.lock,
                 iconColor: AppColors.light,
                 border: InputBorder.none,
@@ -67,7 +68,6 @@ class FormLogin extends GetView<LoginController> {
                   Icons.visibility_off_rounded,
                   color: AppColors.light,
                 ),
-                onChanged: (value) => controller.password,
               ),
               /* Obx(
                 () => InputText(
@@ -117,7 +117,7 @@ class FormLogin extends GetView<LoginController> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: null, //controller.goToRegister,
+                    onTap: controller.goToSignUp,
                     child: Text(
                       "Create new account",
                       style: Theme.of(context).textTheme.subtitle2?.copyWith(

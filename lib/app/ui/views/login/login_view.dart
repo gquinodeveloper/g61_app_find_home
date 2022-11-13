@@ -12,7 +12,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
-      builder: (controller) => CustomScaffold(
+      builder: (ss) => CustomScaffold(
         body: SafeArea(
           bottom: false,
           child: SingleChildScrollView(

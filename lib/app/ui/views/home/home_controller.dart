@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_find_house/app/data/models/request/request_information_model.dart';
 import 'package:app_find_house/app/data/models/response/response_auth_model.dart';
+import 'package:app_find_house/app/data/models/response/response_house_model.dart';
 import 'package:app_find_house/app/data/models/response/response_information_model.dart';
 import 'package:app_find_house/app/data/repositories/customer_repository.dart';
 import 'package:app_find_house/app/data/repositories/house_repository.dart';
@@ -39,6 +40,9 @@ class HomeController extends GetxController {
   //Variables
   RxString userFullName = RxString("");
   RxString address = RxString("");
+  RxInt isSelectedIndex = RxInt(0);
+  RxBool isLoadingHouses = RxBool(false);
+  RxList<ResultHouseModel> houses = RxList([]);
 
   //functions
   void initialize() async {
@@ -63,14 +67,21 @@ class HomeController extends GetxController {
 
   void loadHouses() async {
     try {
+      isLoadingHouses.value = true;
       final response = await _houseRepository.getHouses(
         responseAuthModel.requestToken,
       );
 
-      print(response.result?.length);
+      houses.value = response.result ?? [];
+      isLoadingHouses.value = false;
     } catch (error) {
+      isLoadingHouses.value = false;
       printError(info: error.toString());
     }
+  }
+
+  void selectedIndex(int index) {
+    isSelectedIndex.value = index;
   }
 
   void signOut() async {

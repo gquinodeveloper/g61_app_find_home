@@ -12,6 +12,7 @@ class CustomScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cyan,
+      //appBar: AppBar(),
       body: body,
     );
   }

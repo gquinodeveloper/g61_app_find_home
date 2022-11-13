@@ -1,4 +1,6 @@
 import 'package:app_find_house/app/routes/app_routes.dart';
+import 'package:app_find_house/app/ui/views/detail/detail_binding.dart';
+import 'package:app_find_house/app/ui/views/detail/detail_view.dart';
 import 'package:app_find_house/app/ui/views/home/home_binding.dart';
 import 'package:app_find_house/app/ui/views/home/home_view.dart';
 import 'package:app_find_house/app/ui/views/login/login_binding.dart';
@@ -30,6 +32,11 @@ abstract class AppViews {
       name: AppRoutes.SIGNUP,
       page: () => const SignUpView(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.DETAIL,
+      page: () => const DetailView(),
+      binding: DetailBinding(),
     ),
   ];
 }

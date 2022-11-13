@@ -1,11 +1,16 @@
 import 'package:app_find_house/app/data/models/request/request_signup_model.dart';
 import 'package:app_find_house/app/data/repositories/customer_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
   @override
   void onInit() {
-    // TODO: implement onInit
+    crtlTextName = TextEditingController();
+    crtlTextLastName = TextEditingController();
+    crtlTextAddress = TextEditingController();
+    crtlTextEmail = TextEditingController();
+    crtlTextPassword = TextEditingController();
     super.onInit();
   }
 
@@ -17,7 +22,11 @@ class SignUpController extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    crtlTextName.dispose();
+    crtlTextLastName.dispose();
+    crtlTextAddress.dispose();
+    crtlTextEmail.dispose();
+    crtlTextPassword.dispose();
     super.onClose();
   }
 
@@ -26,18 +35,36 @@ class SignUpController extends GetxController {
 
   //variables
 
+  //TextEditingController
+  late TextEditingController crtlTextName;
+  late TextEditingController crtlTextLastName;
+  late TextEditingController crtlTextAddress;
+  late TextEditingController crtlTextEmail;
+  late TextEditingController crtlTextPassword;
+
   //Functions
+  void goToLogin() {
+    Get.back();
+  }
+
+  void clearCtrlText() {
+    crtlTextName.clear();
+    crtlTextLastName.clear();
+    crtlTextAddress.clear();
+    crtlTextEmail.clear();
+    crtlTextPassword.clear();
+  }
 
   void signUp() async {
     {
       try {
         final response = await _customerRepository.postSignUp(
           RequestSignupModel(
-            name: "Kevin4",
-            lastname: "Kevin4",
-            adress: "Lima-Lima-Lima",
-            email: "kevin4@gmail.com",
-            password: "123",
+            name: crtlTextName.text,
+            lastname: crtlTextLastName.text,
+            adress: crtlTextAddress.text,
+            email: crtlTextEmail.text,
+            password: crtlTextPassword.text,
           ),
         );
         Get.snackbar(
@@ -45,6 +72,7 @@ class SignUpController extends GetxController {
           response.message,
           snackPosition: SnackPosition.BOTTOM,
         );
+        clearCtrlText();
       } catch (error) {
         Get.snackbar("Error de registro", error.toString());
       }
